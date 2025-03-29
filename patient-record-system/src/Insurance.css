@@ -1,0 +1,167 @@
+/* General Styling */
+body {
+  background-color: #575D90; /* Purple */
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Insurance Form Container */
+.insurance-container {
+  width: 600px;
+  padding: 40px;
+  background: #F5EFED; /* White */
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  color: #0F0A0A; /* Black */
+}
+
+input, select {
+  width: 80%;
+  padding: 14px;
+  margin: 12px 0;
+  border: 2px solid #1b9d8e; /* Green */
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+button {
+  width: 85%;
+  padding: 16px;
+  background-color: #1b9d8e; /* Green */
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #147c72; /* Darker green */
+}
+
+/* Error Message */
+.error {
+  color: red;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Insurance Dashboard */
+.insurance-dashboard {
+  text-align: center;
+  width: 700px;
+  background: #F5EFED; /* White */
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.search-bar {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 20px;
+  border: 2px solid #1b9d8e; /* Green */
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+.insurance-list {
+  list-style: none;
+  padding: 0;
+
+}
+
+/* .insurance-list li {
+  padding: 14px;
+  font-size: 1.2rem;
+  background: #e3e3e3;
+  margin: 6px 0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+} */
+
+.insurance-list li:hover {
+  background: #d4d4d4;
+}
+
+.no-results {
+  color: #888;
+  font-size: 1.2rem;
+}
+
+/* Insurance Details */
+.insurance-details {
+  text-align: center;
+  background: #F5EFED; /* White */
+  padding: 50px;
+  width: 600px;
+  font-size: 150%;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.insurance-details ul {
+  list-style: none;
+  padding: 0;
+  font-size: 30px;  
+}
+
+.insurance-details li {
+  padding: 10px;
+  margin: 5px 0;
+  font-size: 25px;
+  background: #ff7f00; /* Orange */
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.insurance-list li {
+  height: 40px;
+  font-size: 25px;
+}
+.insurance-details li:hover {
+  background: #cc6600; /* Darker orange */
+}
+
+/* Additional Sections */
+.insurance-summary {
+  background-color: #1e3a5f; /* Dark Blue */
+  padding: 30px;
+  color: white;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.insurance-summary h3 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.insurance-summary p {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+/* Success and Info Message */
+.success {
+  color: green;
+  font-weight: bold;
+}
+
+.info {
+  color: #1b9d8e; /* Green */
+}

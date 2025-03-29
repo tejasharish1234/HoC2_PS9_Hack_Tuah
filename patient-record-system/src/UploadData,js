@@ -1,0 +1,31 @@
+import React, { useState } from "react";
+import "./UploadData.css"; // Import CSS for styling
+
+function UploadData() {
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleUpload = () => {
+    if (selectedFile) {
+      alert(`File "${selectedFile.name}" uploaded successfully!`);
+      setSelectedFile(null); // Reset file selection after upload
+    } else {
+      alert("Please select a file first.");
+    }
+  };
+
+  return (
+    <div className="upload-container">
+      <h2>Upload Medical Records</h2>
+      <input type="file" onChange={handleFileChange} className="file-input" />
+      <button onClick={handleUpload} className="upload-button">
+        Upload Records
+      </button>
+    </div>
+  );
+}
+
+export default UploadData;
