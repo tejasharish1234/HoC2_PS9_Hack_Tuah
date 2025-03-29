@@ -1,10 +1,18 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from app.prescription_verifier import PrescriptionVerifier  # Ensure correct import
 import os
 
 # Initialize FastAPI
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # ✅ Allow frontend
+    allow_credentials=True,
+    allow_methods=["*"],  # ✅ Allow all methods (GET, POST, etc.)
+    allow_headers=["*"],  # ✅ Allow all headers
+)
 
 # Resolve absolute CSV path
 current_dir = os.path.dirname(os.path.abspath(__file__))  # Get `app/` directory

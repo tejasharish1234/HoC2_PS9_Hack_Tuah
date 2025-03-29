@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./Doc.css";
-import "./Patient.js"
+import "./Patient.js";
+
 // ✅ Doctor/Admin Login Component
 function DoctorLogin() {
   const [Credentials, setCredentials] = useState({
@@ -20,7 +21,11 @@ function DoctorLogin() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!Credentials.hospitalName || !Credentials.email || !Credentials.password) {
+    if (
+      !Credentials.hospitalName ||
+      !Credentials.email ||
+      !Credentials.password
+    ) {
       setError("All fields are required.");
       return;
     }
@@ -71,7 +76,7 @@ function DoctorPage() {
   useEffect(() => {
     const storedName = localStorage.getItem("Name");
     if (storedName) {
-      setPatients([storedName]);  // Store as an array for mapping
+      setPatients([storedName]); // Store as an array for mapping
     }
   }, []);
 
@@ -91,9 +96,11 @@ function DoctorPage() {
               patient.toLowerCase().includes(search.toLowerCase())
             )
             .map((patient, index) => (
-              <li 
-                key={index} 
-                onClick={() => navigate(`/patient/${encodeURIComponent(patient)}`)}
+              <li
+                key={index}
+                onClick={() =>
+                  navigate(`/patient/${encodeURIComponent(patient)}`)
+                }
                 className="clickable"
               >
                 {patient}
@@ -114,24 +121,46 @@ function PatientDetails() {
   const [prescription, setPrescription] = useState("");
   const [submittedPrescription, setSubmittedPrescription] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [interactions, setInteractions] = useState([]);
+  const [loading, setLoading] = useState(false);  // NEW: Loading state
 
   // Retrieve patient details from localStorage
   const patientDetails = {
     name: decodeURIComponent(name),
     ipns: localStorage.getItem("PatientIPNS") || "N/A",
     encryptionKey: localStorage.getItem("EncryptionKey") || "N/A",
-    medicalHistory: localStorage.getItem("MedicalHistory") || "No medical history available."
+    medicalHistory: localStorage.getItem("MedicalHistory") || "No medical history available.",
   };
 
   const handleAddPrescription = () => {
     setShowPrescriptionForm(true);
   };
 
-  const handleSubmitPrescription = () => {
-    console.log("Submitted Prescription:", prescription);
-    setSubmittedPrescription(prescription);
-    setShowPrescriptionForm(false);
-    setIsEditing(false);
+  const handleSubmitPrescription = async () => {
+    console.log("Submitting Prescription:", prescription);
+    setLoading(true);  // Show loading indicator
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ new_prescription: [prescription], past_prescriptions: ["Ibuprofen", "Metformin"] }),
+      });
+
+      const data = await response.json();
+      console.log("Response from server:", data);
+
+      setInteractions(data.interactions || []);
+      setSubmittedPrescription(prescription);
+      setShowPrescriptionForm(false);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error submitting prescription:", error);
+    } finally {
+      setLoading(false);  // Hide loading indicator
+    }
   };
 
   const handleEditPrescription = () => {
@@ -149,9 +178,26 @@ function PatientDetails() {
       <p><strong>Name:</strong> {patientDetails.name}</p>
       <p><strong>IPNS:</strong> {patientDetails.ipns}</p>
       <p><strong>Encryption Key:</strong> {patientDetails.encryptionKey}</p>
-      <h3>AI-summarised medical history</h3>
-      <p>{patientDetails.medicalHistory}</p>
-      
+      <h3>AI-summarised history</h3>
+      <p>{patientDetails.data}</p>
+
+      {interactions.length > 0 || loading ? (
+        <div>
+          <h3>Detected Drug Interactions:</h3>
+          {loading ? (
+            <p>Loading...</p>  // Display "Loading..." while fetching response
+          ) : (
+            interactions.map((interaction, index) => (
+              <p key={index}>
+                <strong>Drug 1:</strong> {interaction.drug1}, 
+                <strong> Drug 2:</strong> {interaction.drug2} <br />
+                <strong>Details:</strong> {interaction.interaction_details}
+              </p>
+            ))
+          )}
+        </div>
+      ) : null}
+
       {!showPrescriptionForm && !submittedPrescription && (
         <button onClick={handleAddPrescription}>Add Prescription</button>
       )}
@@ -171,7 +217,6 @@ function PatientDetails() {
         <div>
           <p><strong>Prescription:</strong> {submittedPrescription}</p>
           <button onClick={handleEditPrescription}>Edit</button>
-          
           <button onClick={handlePushToBlockchain}>Push to Blockchain</button>
         </div>
       )}

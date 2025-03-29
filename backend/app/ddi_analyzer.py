@@ -72,11 +72,11 @@ class DDIAnalyzer:
         Context of similar interactions:
         {chr(10).join(context_interactions)}
         
-        Based PRIMARILY on the above dataset information, provide a comprehensive analysis including:
+        Based PRIMARILY on the above dataset information, provide a short analysis in about 30 words including:
         1. Potential interaction risks and severity of interaction (None/Low/Medium/High/Severe)
-        2. Recommended alternatives 
-
-        Your response should be evidence-based, concise, and focus on patient safety. Include two references at the end."""
+        2. Recommended alternatives only if medium or higher risk
+        
+        Your response should be evidence-based, concise, and focus on patient safety. Make it fast"""
         
         try:
             # Use Ollama to generate interaction analysis
