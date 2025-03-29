@@ -1,0 +1,20 @@
+# Ignore Python cache
+__pycache__/
+*.pyc
+*.pyo
+ddi_test_script.py
+
+# Ignore virtual environments
+ddi_env/
+venv/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore editor/project settings
+.vscode/
+.idea/
+
+# Ignore log files
+*.log
